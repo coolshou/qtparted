@@ -1,0 +1,18 @@
+Source: qtparted
+Section: admin
+Priority: optional
+Maintainer: coolshou <coolshou2060@gmail.com>
+Build-Depends: debhelper-compat (>= 12), libparted-dev, qtbase5-dev
+Standards-Version: 4.4.1
+Homepage: https://github.com/coolshou/qtparted
+#Vcs-Browser: https://github.com/coolshou/qtparted
+#Vcs-Git: https://github.com/coolshou/qtparted.git
+
+Package: qtparted
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: QTParted is a Partition Magic clone written in C++ using the Qt toolkit
+ QTParted is an attempt to create a linux-based clone of Partition Magic.
+ Actually, a clone already exists called "parted". It allows the creation,
+ reorganization, and removal of partitions. But "parted" has a command line
+ based interface, which can be difficult for a newbie to use.
