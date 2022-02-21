@@ -1,0 +1,14 @@
+[Desktop Entry]
+Exec=qtparted
+Name=QtParted
+Icon=qtparted
+Terminal=false
+Type=Application
+GenericName=Disk Partitioning Tool
+GenericName[it]=Partizionamento di un disco
+GenericName[fr]=Partitionner un disque
+GenericName[fi]=Kiintolevyn partitiointityökalu
+GenericName[de]=Partitionierungstool
+GenericName[zh-TW]=磁碟分割工具
+Encoding=UTF-8
+Categories=Utility;System;QT;Qt;Filesystem;
