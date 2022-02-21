@@ -20,6 +20,8 @@
 #
 # QTParted qmake profile
 #
+# Executable name
+TARGET    = qtparted
 
 # Configuration.  Remove the word 'thread' to build against non-threaded Qt
 CONFIG    += qt thread debug
@@ -35,10 +37,6 @@ unix: {
     CONFIG += link_pkgconfig
     PKGCONFIG += libparted
 }
-# unix:LIBS += -ldl -lparted
-
-# Executable name
-TARGET    = qtparted
 
 
 # Header files
@@ -73,9 +71,6 @@ HEADERS   =  src/qtparted.h          \
              src/qp_debug.h          \
              src/statistics.h
 
-
-
-
 # Source files
 SOURCES   =  src/main.cpp            \
              src/qp_common.cpp       \
@@ -108,7 +103,6 @@ SOURCES   =  src/main.cpp            \
              src/qp_debug.cpp        \
              src/statistics.cpp
 
-
 # Qt Designer interfaces
 INTERFACES = src/qp_ui_create.ui     \
              src/qp_ui_format.ui     \
@@ -128,4 +122,22 @@ TRANSLATIONS = ts/qtparted_ca.ts \
                ts/qtparted_ru.ts \
                ts/qtparted_sv.ts \
                ts/qtparted_ua.ts
+
+# install files
+targetbin.path = /usr/bin
+targetbin.files = $$TARGET
+INSTALLS += targetbin
+
+qtparted_images.path =  /usr/share/qtparted/pics
+qtparted_images.files = data/*.png
+INSTALLS +=  qtparted_images
+
+images.path =  /usr/share/pixmaps
+images.files = data/qtparted.xpm
+INSTALLS +=  images
+
+desktop.path = /usr/share/applications
+desktop.files = data/qtparted.desktop
+INSTALLS += desktop
+
 
