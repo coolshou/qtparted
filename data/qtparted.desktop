@@ -1,7 +1,7 @@
 [Desktop Entry]
 Exec=qtparted
 Name=QtParted
-Icon=qtparted
+Icon=qtparted.xpm
 Terminal=false
 Type=Application
 GenericName=Disk Partitioning Tool
