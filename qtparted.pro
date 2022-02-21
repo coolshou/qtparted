@@ -31,7 +31,11 @@ DEFINES     += DATADIR='"\\"/usr/share/\\""'
 DEFINES     += VERSION='"\\"0.7.0\\""'
 
 #LIBS
-unix:LIBS += -ldl -lparted
+unix: {
+    CONFIG += link_pkgconfig
+    PKGCONFIG += libparted
+}
+# unix:LIBS += -ldl -lparted
 
 # Executable name
 TARGET    = qtparted
