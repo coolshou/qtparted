@@ -29,8 +29,10 @@ CONFIG    += qt thread debug
 QT += widgets
 INCLUDEPATH += . ui src ts
 
-DEFINES     += DATADIR='"\\"/usr/share/\\""'
-DEFINES     += VERSION='"\\"0.7.0\\""'
+DATADIR = "/usr/share/$$TARGET"
+
+DEFINES     += DATADIR='\\"$$DATADIR\\"'
+DEFINES     += VERSION='\\"0.7.0\\"'
 
 #LIBS
 unix: {
@@ -121,14 +123,34 @@ TRANSLATIONS = ts/qtparted_ca.ts \
                ts/qtparted_pl.ts \
                ts/qtparted_ru.ts \
                ts/qtparted_sv.ts \
-               ts/qtparted_ua.ts
+               ts/qtparted_ua.ts \
+               ts/qtparted_zh_TW.ts
+
+TRANSLATIONS_FILES =
+
+qtPrepareTool(LRELEASE, lrelease)
+for(tsfile, TRANSLATIONS) {
+ qmfile = $$shadowed($$tsfile)
+ qmfile ~= s,.ts$,.qm,
+ qmdir = $$dirname(qmfile)
+ !exists($$qmdir) {
+ mkpath($$qmdir)|error("Aborting.")
+ }
+ command = $$LRELEASE -removeidentical $$tsfile -qm $$qmfile
+ system($$command)|error("Failed to run: $$command")
+ TRANSLATIONS_FILES += $$qmfile
+}
+
+translate.path = $$DATADIR/locale
+translate.files = $$TRANSLATIONS_FILES
+INSTALLS += translate
 
 # install files
 targetbin.path = /usr/bin
 targetbin.files = $$TARGET
 INSTALLS += targetbin
 
-qtparted_images.path =  /usr/share/qtparted/pics
+qtparted_images.path =  $$DATADIR/pics
 qtparted_images.files = data/*.png
 INSTALLS +=  qtparted_images
 
