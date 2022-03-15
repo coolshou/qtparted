@@ -42,7 +42,7 @@ time_t uptime() {
 	FILE *uptime_fd;
 
 	uptime_fd = fopen(UPTIME_FILE, "r");
-	
+
 	if(!uptime_fd || (fread(buf, 255, 1, uptime_fd) == 0))
 		return 0;
 	if (sscanf(buf, "%lf %lf", &up, &idle) < 2) {
@@ -69,7 +69,7 @@ bool QP_Device::newPartTable() {
 
 	if (!dev)
 		goto error;
-	
+
 	def_type = ped_disk_probe(dev);
 
 	if (ped_device_is_busy(dev))
@@ -86,7 +86,7 @@ bool QP_Device::newPartTable() {
 	if (!ped_disk_commit (disk))
 		goto error_destroy_disk;
 	ped_disk_destroy (disk);
-	
+
 	_partitionTable = true;
 
 	return true;
@@ -197,15 +197,15 @@ int QP_Device::convertDevfsNameToShortName(const char *szDevfs, char *szShort, i
 		// stats
 		snprintf(szTemp1, sizeof(szTemp1), "/dev/%s", dire->d_name);
 		nRes = lstat(szTemp1, &st);
-	  
+
 		// if this is a sym link
 		if ((nRes == 0) && S_ISLNK(st.st_mode)) {
 			memset(szTemp, 0, sizeof(szTemp));
 			nRes = readlink(szTemp1, szTemp, sizeof(szTemp));
-	  
+
 			memset(szTemp2, 0, sizeof(szTemp2));
 			snprintf(szTemp2, sizeof(szTemp2), "/dev/%s", szTemp);
-	  
+
 			if (strcmp(szDevfs, szTemp2) == 0) {
 				memset(szShort, 0, nMaxShort);
 				snprintf(szShort, nMaxShort, "%s", szTemp1);
@@ -236,14 +236,14 @@ void QP_DevList::getDevices() {
 	/*---get all the device (ie /dev/sda, /dev/hda /etc /etc)---*/
 	PedDevice *dev = NULL;
 	ped_device_probe_all();
-	
+
 	while ((dev = ped_device_get_next(dev))) {
 		// Workaround for parted detecting CD-ROMs as harddisks
 		// FIXME remove if/when parted gets fixed
 		QString p(dev->path);
-		if(!p.startsWith("/dev/sd") && (p.contains("/dev/scd") || p.contains("/dev/sr") || access(("/proc/ide/" + p.section('/', 2, 2) + "/cache").toLatin1(), R_OK)))
+		if(!(p.startsWith("/dev/sd") || p.startsWith("/dev/nvme")) && (p.contains("/dev/scd") || p.contains("/dev/sr") || access(("/proc/ide/" + p.section('/', 2, 2) + "/cache").toLatin1(), R_OK)))
 			continue;
-		
+
 		QP_Device *device = new QP_Device(_settings);
 
 		/*---with devfs libparted return longname, otherwise the shortname---*/
